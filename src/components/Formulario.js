@@ -1,11 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {CategoriaContext} from '../context/CategoriaContext';
+import {RecetasContext} from '../context/RecetasContext';
 
 const Formulario = () => {
 
 
   //acceder a las categorias del context
   const {categorias} = useContext(CategoriaContext);
+  
+  //acceder al valor del segundo contexto
+  const {buscarRecetas, guardarEstadoConsulta} = useContext(RecetasContext)
 
   //state para que guardar las busquedas del usuario
   const [ busqueda, actualizarBusqueda] = useState({
@@ -21,9 +25,16 @@ const Formulario = () => {
     });
 
   }
+
+  const consultarRecetas = e =>{
+    e.preventDefault();
+    buscarRecetas(busqueda);
+    guardarEstadoConsulta(true);
+  }
     return (
       <form
         className="col-12"
+        onSubmit={consultarRecetas}
       >
         <fieldset className="text-center">
           <legend>Busca bebidas por Categoría o Ingrediente</legend>
