@@ -22,6 +22,7 @@ const ModalProvider = (props) => {
             const resultado = await axios.get(url);
 
             guardarRecetaSeleccionada(resultado.data.drinks[0]);
+            
         }
         ConsultarIdBebida();
     }, [idreceta]);
@@ -29,7 +30,9 @@ const ModalProvider = (props) => {
     return (
         <ModalContext.Provider
             value={{
-                guardarIdReceta
+                recetaseleccionada,
+                guardarIdReceta,
+                guardarRecetaSeleccionada
             }}
         >
             {props.children}

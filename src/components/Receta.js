@@ -28,8 +28,9 @@ const useStyles = makeStyles(theme => ({
 
 const Receta = ({receta}) => {
 
-    const {guardarIdReceta} = useContext(ModalContext);
+    const {recetaseleccionada, guardarIdReceta, guardarRecetaSeleccionada} = useContext(ModalContext);
 
+    
     //Configuramos unas cosas para el modal
 
     const [modalStyle] = useState(getModalStyle); //un state que contenga los estilos del modal 
@@ -67,11 +68,17 @@ const Receta = ({receta}) => {
                         open={open}
                         onClose = { () => {
                             guardarIdReceta(null);
-                            handleClose()
+                            guardarRecetaSeleccionada({});
+                            handleClose();
                         }}
                     >
                         <div style={modalStyle} className={classes.paper}>
-                            <h1>Desde Modal</h1>
+                            <h2>{recetaseleccionada.strDrink}</h2>
+                            <h3 className="mt-4">Instrucciones</h3>
+                            <p>
+                               {recetaseleccionada.strInstructions} 
+                            </p>
+                            <img className="img-fluid my-4" src={recetaseleccionada.strDrinkThumb} />
                         </div>
                     </Modal>
                 </div>
