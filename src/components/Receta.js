@@ -3,6 +3,8 @@ import {ModalContext} from '../context/ModalContext'
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 
+import PropTypes from "prop-types";
+
 //funcion para algunos posicionamientos
 function getModalStyle() {
     const top = 50 ;
@@ -12,6 +14,7 @@ function getModalStyle() {
       top: `${top}%`,
       left: `${left}%`,
       transform: `translate(-${top}%, -${left}%)`,
+      
     };
 }
 
@@ -19,12 +22,13 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
     paper: {
       position: 'absolute',
-      width: 400,
+      width: 300,
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
 }));
+
 
 const Receta = ({receta}) => {
 
@@ -45,6 +49,22 @@ const Receta = ({receta}) => {
       const handleClose = () => {
         setOpen(false);
       };
+
+      //Función que accede a los ingredientes y cantidades
+
+    const mostrarIngredientes = recetaseleccionada => {
+        let ingredientes = [];
+        for(let i=1; i<16; i++){
+            if(recetaseleccionada[`strIngredient${i}`]){
+                ingredientes.push(
+                    <li key={i}>{recetaseleccionada[`strIngredient${i}`]} {recetaseleccionada[`strMeasure${i}`]}</li>
+                )
+            }
+        }
+
+        return ingredientes;
+    
+    }
 
     return (
         <div className="col-md-4 mb-3">
@@ -78,13 +98,22 @@ const Receta = ({receta}) => {
                             <p>
                                {recetaseleccionada.strInstructions} 
                             </p>
-                            <img className="img-fluid my-4" src={recetaseleccionada.strDrinkThumb} />
+                            <img className="img-fluid my-4" src={recetaseleccionada.strDrinkThumb}  alt="imagen de la receta seleccionada"/>
+
+                            <h3 className="mt-4">Ingredientes y Cantidades</h3>
+                            <ul>
+                                {mostrarIngredientes(recetaseleccionada)}
+                            </ul>
                         </div>
                     </Modal>
                 </div>
             </div>
         </div>
       );
+}
+
+Receta.propTypes = {
+    receta: PropTypes.object.isRequired,
 }
  
 export default Receta;

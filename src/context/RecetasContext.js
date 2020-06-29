@@ -24,7 +24,6 @@ const RecetasProvider = (props) => {
         if(estadoconsulta){
             const consultaRecetas = async () => {
                 const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${nombre}&c=${categoria}`
-                
                 const resultado = await axios.get(url)
 
                 guardarRecetas(resultado.data.drinks);
